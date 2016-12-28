@@ -12,6 +12,7 @@ $sites = Site::model() -> findAll();
 Yii::app() -> getClientScript() -> registerScriptFile(Yii::app() -> baseUrl . '/js/script.js',CClientScript::POS_END);
 Yii::app() -> getClientScript() -> registerCssFile(Yii::app() -> baseUrl . '/css/styles.css');
 ?>
+<a href="<?php echo Yii::app() -> createUrl('login/logout'); ?>">Выйти</a>
 <div id="wrapper">
     <div id="prices_tabs_cont">
         <?php

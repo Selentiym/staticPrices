@@ -14,6 +14,9 @@ class LoginController extends Controller
      */
     public function actionLogin()
     {
+        if (Yii::app() -> user -> getState('logged')) {
+            $this -> redirect(Yii::app() -> baseUrl.'/');
+        }
         $modelClass = $this -> loginFormClass;
         $model=new $modelClass();
 
@@ -31,8 +34,10 @@ class LoginController extends Controller
         {
             $model->attributes=$_POST[get_class($model)];
             // validate user input and redirect to the previous page if valid
-            if($model->validate() && $model->login())
-                $this->redirect(Yii::app()->baseUrl.'/');
+            if($model->validate() && $model->login()) {
+                Yii::app() -> user -> setState('logged', 1);
+                $this->redirect(Yii::app()->baseUrl . '/');
+            }
         }
         // display the login form
         $this->renderPartial('login',array('model'=>$model));
@@ -42,6 +47,7 @@ class LoginController extends Controller
      */
     public function actionLogout()
     {
+        Yii::app() -> user -> setState('logged', 0);
         Yii::app()->user->logout();
         Yii::app() -> user -> raiseEvent('onLogout',new CEvent($this));
         $this->redirect(Yii::app()->homeUrl);
@@ -57,16 +63,16 @@ class LoginController extends Controller
         //$isParent = 'return Yii::app() -> user -> getId()==$params["user"] -> id_parent';
         //$auth->createOperation('viewChildUserCabinet', 'view your child user\'s cabinet.', $isParent);
 
-        $auth -> createOperation('administrateTask', 'Accept or decline texts corresponding to the task.', 'return ((User::logged() -> id == $params["task"] -> id_editor)||(Yii::app() -> user -> checkAccess("admin")));');
+        //$auth -> createOperation('administrateTask', 'Accept or decline texts corresponding to the task.', 'return ((User::logged() -> id == $params["task"] -> id_editor)||(Yii::app() -> user -> checkAccess("admin")));');
 
         $admin = $auth->createRole('admin');
-        $editor = $auth->createRole('editor');
+        /*$editor = $auth->createRole('editor');
         $author = $auth->createRole('author');
 
         $editor->addChild('administrateTask');
         $editor->addChild('author');
         $admin->addChild('editor');
-
+*/
         $this->AddAdminUser();
         //$auth -> createOperation('viewOwnUserCabinet', 'view your own cabinet.', $bizRule);
     }
@@ -74,13 +80,13 @@ class LoginController extends Controller
     public function AddAdminUser() {
         $auth = Yii::app()->authManager;
         $admin = User::model()->findByAttributes(array('username' => 'shubinsa'));
-        $editor = User::model()->findByAttributes(array('username' => 'nikita'));
+        /*$editor = User::model()->findByAttributes(array('username' => 'nikita'));
         $author1 = User::model()->findByAttributes(array('username' => 'anna'));
-        $author2 = User::model()->findByAttributes(array('username' => 'nastya'));
+        $author2 = User::model()->findByAttributes(array('username' => 'nastya'));*/
 
         $auth->assign('admin', $admin->id);
-        $auth->assign('editor', $editor->id);
+        /*$auth->assign('editor', $editor->id);
         $auth->assign('author', $author1->id);
-        $auth->assign('author', $author2->id);
+        $auth->assign('author', $author2->id);*/
     }//*/
 }

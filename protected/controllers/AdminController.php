@@ -5,15 +5,10 @@ class AdminController extends Controller
     public $defaultAction = 'prices';
     public $layout = 'main';
 
-    public function beforeAction(){
-        $u = Yii::app() -> user;
-        //var_dump(Yii::app() -> user);
-        //if (Yii::app() -> user -> checkAccess('admin')) {
-            return true;
-        //}
-        $this -> redirect('login');
-    }
     public function actionPrices($siteId = false) {
+        if (!Yii::app() -> user -> getState('logged')) {
+            $this -> redirect('login');
+        }
         $input = $_POST;
         if ($input['site']) {
             $site = Site::model() -> findByPk($input['siteId']);
