@@ -1,0 +1,63 @@
+#prices_tabs_cont a.siteTab {
+    display:inline-block;
+    margin:5px;
+    border:1px solid;
+    border-radius:5px;
+    background-color: lightcyan;
+    padding:5px;
+}
+#prices_tabs_cont a.siteTab.active {
+    background-color: lightgreen;
+}
+
+.tableRow .priceName {
+    display:inline-block;
+    width: 150px;
+    height:inherit;
+    margin-right:10px;
+    vertical-align: middle;
+}
+.tableRow .priceContainer{
+    display: inline-block;
+    width:40px;
+    text-align:center;
+    vertical-align: middle;
+}
+.tableColumn {
+    display: inline-block;
+    vertical-align: top;
+}
+.tableColumn .tableRow{
+    height:40px;
+    display: block;
+    overflow:hidden;
+    padding:0;
+    margin:0;
+}
+.oldPriceList {
+    max-width: 100px;
+}
+.oldPriceList .tableRow:before {
+    content:'';
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+.oldPriceList .tableRow {
+    height: 39px;
+    border-collapse: collapse;
+    border-bottom: 1px solid black;
+}
+.oldPriceList .tableRow *{
+    vertical-align: middle;
+}
+.oldPriceList .tableRow.price .value{
+    display: inline-block;
+    border:1px solid black;
+    line-height: 14px;
+    font-size:14px;
+    padding:2px;
+}
+.price_form {
+    width:200px;
+}
